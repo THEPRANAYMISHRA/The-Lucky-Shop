@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../Products.css";
 const baseUrl = "https://fakestoreapi.com/products";
 
 function Products() {
@@ -14,10 +15,10 @@ function Products() {
   return (
     <div className="container">
       <h1>Products</h1>
-      <div className="product-list">
+      <div className="myContainer">
         {products.map((product) => (
-          <div key={product.id} className="w-25">
-            <img src={product.image} alt={product.title} className="w-100" />
+          <div key={product.id} className="border p-2">
+            <img src={product.image} alt={product.title} className="" />
             <p>{product.title}</p>
           </div>
         ))}
