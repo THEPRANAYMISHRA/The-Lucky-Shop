@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -14,6 +15,10 @@ export default function Navbar() {
           />
           TheLuckyShop
         </a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <Link to="/Home">Home</Link>
+          <Link to="/products">Products</Link>
+        </ul>
         <form classNameName="form-inline">
           <input
             classNameName="form-control mr-sm-2"

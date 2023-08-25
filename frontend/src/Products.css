@@ -1,0 +1,10 @@
+.myContainer {
+  background-color: rgba(255, 255, 255, 0.812);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.myContainer img {
+  width: 100px;
+}
