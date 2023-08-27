@@ -22,7 +22,7 @@ export default function Slider() {
   }, [images.length]);
 
   return (
-    <div className="d-flex w-75 m-5">
+    <div className="d-flex w-100 my-3">
       <div className="imgBox">
         <img
           src={images[currentIndex]}
