@@ -1,16 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-// import Navbar from "./Navbar";
 import { useAuth } from "./AuthContext";
-const baseUrl = "https://reqres.in/api/login";
+const baseUrl = "http://localhost:4500/user/login";
 
 export default function Login() {
   const { setIsLoggedIn, setUserData } = useAuth();
-
-  const sendValueToParent = (loginState, userDetails) => {
-    setIsLoggedIn(loginState);
-    setUserData(userDetails);
-  };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,16 +16,18 @@ export default function Login() {
       .then((res) => {
         alert("Login successful!");
         localStorage.setItem("token", res.data.token);
-        sendValueToParent(true, { name: "Pranay" });
+        localStorage.setItem("usersname", res.data.name);
+        setIsLoggedIn(true);
+        setUserData({ name: res.data.name });
       })
       .catch((err) => {
-        alert("Login failed!");
+        alert("Invalid Credentials");
       });
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="container my-3">
+      <form onSubmit={handleSubmit} className="container w-50 my-3 border p-5">
         <h1>Login Form</h1>
         <input
           type="text"
@@ -44,6 +41,12 @@ export default function Login() {
           placeholder="Enter Password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <p>
+          Don't have account?
+          <Link to="/signup" className="text-decoration-none">
+            Sign up
+          </Link>
+        </p>
         <button className="btn btn-primary">Submit</button>
       </form>
     </div>
