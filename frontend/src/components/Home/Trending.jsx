@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Trending() {
   return (
-    <div className="d-flex flex-column mx-3 border w-50">
+    <div className="d-flex border w-50 my-3">
       <div className="w-100">
         <img
           src="https://cdn.shopclues.com/images/banners/2023/Apr/14/2Platinum_Srushty_14April23.jpg"

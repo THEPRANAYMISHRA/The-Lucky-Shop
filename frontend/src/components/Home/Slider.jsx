@@ -1,5 +1,5 @@
-import Trending from "./Trending";
 import React, { useState, useEffect } from "react";
+import "./homeStyle.css";
 
 export default function Slider() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,7 +22,7 @@ export default function Slider() {
   }, [images.length]);
 
   return (
-    <div className="d-flex w-100 my-3">
+    <div className="d-flex w-100 my-3 mycontainer">
       <div className="imgBox">
         <img
           src={images[currentIndex]}
@@ -30,7 +30,6 @@ export default function Slider() {
           className="w-100"
         />
       </div>
-      <Trending />
     </div>
   );
 }
