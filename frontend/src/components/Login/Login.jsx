@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../AuthContext";
 const baseUrl = "http://localhost:4500/user/login";
 
 export default function Login() {

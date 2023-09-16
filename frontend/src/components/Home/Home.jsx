@@ -1,9 +1,12 @@
 import Dealsoftheday from "./Dealsoftheday";
+import Trending from "./Trending";
 import Slider from "./Slider";
 import React from "react";
 import axios from "axios";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../AuthContext";
 import { useEffect } from "react";
+import "./homeStyle.css";
+import ShopByCategory from "./ShopByCategory";
 const baseUrl = "http://localhost:4500/user/verify";
 
 export default function Home() {
@@ -38,8 +41,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container border">
+      <ShopByCategory />
       <Slider />
+      <Trending />
       <Dealsoftheday />
     </div>
   );

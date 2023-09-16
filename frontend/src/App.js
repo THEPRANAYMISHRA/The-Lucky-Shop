@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Products from "./components/Products"
-import Home from "./components/Home"
-import Login from "./components/Login";
+import Navbar from "./components/Navbar/Navbar";
+import Products from "./components/Products/Products"
+import Home from "./components/Home/Home"
+import Login from "./components/Login/Login";
+import Cart from "./components/Cart/Cart";
 import Signup from "./components/Signup";
-import Cart from "./components/Cart";
 import { AuthProvider } from "./components/AuthContext";
 import { CartProvider } from "./components/CartContext";
 
