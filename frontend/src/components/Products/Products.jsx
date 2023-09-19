@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Products.css";
+import { Link } from "react-router-dom";
 
 const baseUrl = "http://localhost:4500";
 
@@ -56,7 +57,7 @@ function Products() {
   }, []);
 
   return (
-    <div className="container border overflow-y-scroll">
+    <div className="p-3">
       <h1>Products</h1>
       <div>
         <input
@@ -90,6 +91,9 @@ function Products() {
               >
                 Add to cart
               </button>
+              <Link to={`/view/${product._id}`} className="btn btn-primary">
+                View
+              </Link>
             </div>
           ))
         ) : (

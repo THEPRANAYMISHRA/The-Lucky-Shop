@@ -7,6 +7,7 @@ import Cart from "./components/Cart/Cart";
 import Signup from "./components/Signup";
 import { AuthProvider } from "./components/AuthContext";
 import { CartProvider } from "./components/CartContext";
+import ViewMore from "./components/Products/ViewMore";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/view/:id" element={<ViewMore />} />
           </Routes>
         </CartProvider>
       </AuthProvider>
