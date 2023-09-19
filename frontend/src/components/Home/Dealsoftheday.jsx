@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import "./dealsofday.css";
 
-export default function Dealsoftheday() {
+export default function Dealsoftheday(props) {
   return (
-    <div className="border p-3">
-      <h2>Deals of the day</h2>
+    <div className="border p-3 my-3">
+      <h2>{props.title}</h2>
       <div className="border d-flex overflow-x-scroll my-component gap-2 align-items-center my-3">
         <div className="border p-1">
           <img

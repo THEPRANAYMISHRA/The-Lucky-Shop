@@ -7,6 +7,7 @@ import { useAuth } from "../AuthContext";
 import { useEffect } from "react";
 import "./homeStyle.css";
 import ShopByCategory from "./ShopByCategory";
+import Footer from "../Footer/Footer";
 const baseUrl = "http://localhost:4500/user/verify";
 
 export default function Home() {
@@ -41,11 +42,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container border">
+    <div className="">
       <ShopByCategory />
       <Slider />
       <Trending />
-      <Dealsoftheday />
+      <Dealsoftheday title="Deals Of The Day" />
+      <Dealsoftheday title="Super Saver" />
+      <Dealsoftheday title="Most Selling" />
+      <Footer />
     </div>
   );
 }
