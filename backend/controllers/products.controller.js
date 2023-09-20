@@ -31,20 +31,45 @@ const deleteProduct = async (req, res) => {
 const getProducts = async (req, res) => {
     const id = req.query.id
     const itemName = req.query.item
+    const currentPage = req.query.page
+    const itemPerPage = 3
 
     if (!id) {
         if (!itemName) {
             try {
-                let products = await ProductsModel.find()
-                return res.status(200).send(products)
+                let allProducts = await ProductsModel.aggregate([{
+                    $group: {
+                        _id: null,
+                        total: { $sum: 1 }
+                    }
+                }]);
+
+                let totalCount = Math.ceil(allProducts[0].total / itemPerPage);
+
+                let products = await ProductsModel.aggregate([
+                    { $skip: (currentPage - 1) * itemPerPage },
+                    { $limit: itemPerPage }
+                ]);
+                return res.status(200).send({ Products: products, "Total Pages": totalCount, "Current Page": currentPage, "Limit": itemPerPage })
             } catch (error) {
                 console.error(error);
                 return res.status(500).send({ "msg": "Internal server error" });
             }
         } else {
             try {
-                let products = await ProductsModel.aggregate([{ $match: { title: { $regex: new RegExp(itemName, 'i') } } }]);
-                return res.status(200).send(products)
+                const allProducts = await ProductsModel.aggregate([
+                    { $match: { title: { $regex: new RegExp(itemName, 'i') } } }
+                ]);
+
+                const totalCount = Math.ceil(allProducts.length / itemPerPage);
+
+                const products = await ProductsModel.aggregate([
+                    { $match: { title: { $regex: new RegExp(itemName, 'i') } } },
+                    { $skip: (currentPage - 1) * itemPerPage },
+                    { $limit: itemPerPage }
+                ]);
+
+                return res.status(200).send({ Products: products, "Total Pages": totalCount, "Current Page": currentPage, "Limit": itemPerPage });
             } catch (error) {
                 console.error(error);
                 return res.status(500).send({ "msg": "Internal server error" });

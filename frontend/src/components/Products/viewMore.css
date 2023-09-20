@@ -1,0 +1,12 @@
+.product-container {
+  flex-direction: row !important;
+}
+
+@media screen and (max-width: 900px) {
+  .product-image {
+    width: 100% !important;
+  }
+  .product-container {
+    flex-direction: column !important;
+  }
+}
