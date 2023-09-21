@@ -28,15 +28,18 @@ export default function ViewMore(props) {
   }, [productId]);
 
   return (
-    <div className="p-3 border m-3">
+    <div className="p-3 m-3 outer-container">
       {product.map((item) => (
         <div key={item.id} className="d-flex gap-3 product-container">
           <img src={item.image} alt="" className="w-25 border product-image" />
-          <div className="bg-info w-100 p-1">
-            <p className="h2 border my-2">{item.title}</p>
-            <p className="h5 border my-2">Rating:{item.rating.rate}</p>
+          <div className="w-100 p-3">
+            <p className="text-secondary-emphasis">
+              Category : {item.category}
+            </p>
+            <p className="h2 my-2">{item.title}</p>
+            <p className="h5 my-2">Rating:{item.rating.rate}</p>
             <button className="btn btn-primary">Buy Now</button>
-            <details className="border my-2">
+            <details className="my-2">
               <summary>Description</summary>
               <div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
