@@ -3,6 +3,19 @@
   text-align: center;
   width: 100%;
 }
+
+.my-component div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.my-component img {
+  width: 150px !important;
+  height: 180px !important;
+  border: 2px solid red;
+}
 .my-component::-webkit-scrollbar {
   width: 10px;
 }

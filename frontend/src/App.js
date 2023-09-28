@@ -4,7 +4,7 @@ import Products from "./components/Products/Products"
 import Home from "./components/Home/Home"
 import Login from "./components/Login/Login";
 import Cart from "./components/Cart/Cart";
-import Signup from "./components/Signup";
+import Signup from "./components/signup/Signup";
 import { AuthProvider } from "./components/AuthContext";
 import { CartProvider } from "./components/CartContext";
 import ViewMore from "./components/Products/ViewMore";

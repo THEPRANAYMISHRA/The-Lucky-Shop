@@ -32,24 +32,54 @@ const getProducts = async (req, res) => {
     const id = req.query.id
     const itemName = req.query.item
     const currentPage = req.query.page
+    const sort = req.query.sort
+    const category = req.query.category
     const itemPerPage = 3
 
     if (!id) {
         if (!itemName) {
             try {
-                let allProducts = await ProductsModel.aggregate([{
+                let firstPipeline = []
+
+                if (category) {
+                    firstPipeline.push({ $match: { category: { $regex: new RegExp(category, 'i') } } })
+                }
+
+                firstPipeline.push({
                     $group: {
                         _id: null,
                         total: { $sum: 1 }
                     }
-                }]);
+                });
 
-                let totalCount = Math.ceil(allProducts[0].total / itemPerPage);
 
-                let products = await ProductsModel.aggregate([
-                    { $skip: (currentPage - 1) * itemPerPage },
-                    { $limit: itemPerPage }
-                ]);
+                let allProducts = await ProductsModel.aggregate(firstPipeline);
+                let totalCount = Math.ceil((allProducts[0]?.total || 1) / itemPerPage);
+
+
+                let pipeline = [];
+
+                if (sort) {
+                    if (sort == "asc") {
+                        pipeline.push({ $sort: { title: 1 } });
+                    } else if (sort == "desc") {
+                        pipeline.push({ $sort: { title: -1 } });
+                    } else if (sort == "l2h") {
+                        pipeline.push({ $sort: { price: 1 } });
+                    } else {
+                        pipeline.push({ $sort: { price: -1 } });
+                    }
+                }
+
+                if (category) {
+                    pipeline.push({ $match: { category: { $regex: new RegExp(category, 'i') } } });
+                }
+
+                pipeline.push({ $skip: (currentPage - 1) * itemPerPage });
+                pipeline.push({ $limit: itemPerPage });
+
+                let products = await ProductsModel.aggregate(pipeline);
+
                 return res.status(200).send({ Products: products, "Total Pages": totalCount, "Current Page": currentPage, "Limit": itemPerPage })
             } catch (error) {
                 console.error(error);
@@ -61,13 +91,31 @@ const getProducts = async (req, res) => {
                     { $match: { title: { $regex: new RegExp(itemName, 'i') } } }
                 ]);
 
-                const totalCount = Math.ceil(allProducts.length / itemPerPage);
+                let pipeline = [];
 
-                const products = await ProductsModel.aggregate([
-                    { $match: { title: { $regex: new RegExp(itemName, 'i') } } },
-                    { $skip: (currentPage - 1) * itemPerPage },
-                    { $limit: itemPerPage }
-                ]);
+                if (sort) {
+                    if (sort == "asc") {
+                        pipeline.push({ $sort: { title: 1 } });
+                    } else if (sort == "desc") {
+                        pipeline.push({ $sort: { title: -1 } });
+                    } else if (sort == "l2h") {
+                        pipeline.push({ $sort: { price: 1 } });
+                    } else {
+                        pipeline.push({ $sort: { price: -1 } });
+                    }
+                }
+
+                if (category) {
+                    pipeline.push({ $match: { category: { $regex: new RegExp(category, 'i') } } });
+                }
+
+                pipeline.push({ $match: { title: { $regex: new RegExp(itemName, 'i') } } })
+                pipeline.push({ $skip: (currentPage - 1) * itemPerPage })
+                pipeline.push({ $limit: itemPerPage })
+
+                const products = await ProductsModel.aggregate(pipeline);
+
+                const totalCount = Math.ceil(allProducts.length / itemPerPage);
 
                 return res.status(200).send({ Products: products, "Total Pages": totalCount, "Current Page": currentPage, "Limit": itemPerPage });
             } catch (error) {
