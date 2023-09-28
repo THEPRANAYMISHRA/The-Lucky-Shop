@@ -69,7 +69,7 @@ export default function Navbar(props) {
             </li>
             <li className="nav-item">
               <a className="nav-link" aria-disabled="true" href="/">
-                {isLoggedIn ? userData.name : "Profile"}
+                {userData.name}
               </a>
             </li>
           </ul>

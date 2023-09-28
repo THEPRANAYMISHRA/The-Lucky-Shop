@@ -45,5 +45,20 @@ const getProducts = async (req, res) => {
     }
 }
 
+const updateQuantity = async (req, res) => {
+    const email = req.body.email
+    const itemId = req.body.itemId
+    const itemQuantity = req.body.quantity
 
-module.exports = { addProduct, deleteProduct, getProducts }
+    console.log(email, itemId)
+    try {
+        await CartModel.findByIdAndUpdate(itemId, { quantity: itemQuantity })
+        let product = await CartModel.findById(itemId)
+        return res.status(200).send(product);
+    } catch (error) {
+        return res.send(error)
+    }
+}
+
+
+module.exports = { addProduct, deleteProduct, getProducts, updateQuantity }

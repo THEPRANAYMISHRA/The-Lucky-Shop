@@ -3,20 +3,24 @@ import axios from "axios";
 import "./Products.css";
 import { Link } from "react-router-dom";
 import "boxicons";
-
 const baseUrl = "http://localhost:4500";
 
 function Products() {
+  // State variables
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [buttons, setButtons] = useState([]);
   const [priceRange, setPriceRange] = useState(0);
+  const [sortby, setSortBy] = useState("");
+  const [categoryToSearch, setCategoryToSearch] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Event handlers
   const handleSearch = (event) => {
+    setCurrentPage(1);
     setSearchText(event.target.value);
   };
 
@@ -25,10 +29,13 @@ function Products() {
   };
 
   const handleSidebar = () => {
-    if (isSidebarOpen) {
-      setIsSidebarOpen(false);
-    } else {
-      setIsSidebarOpen(true);
+    // Toggle sidebar state
+    setIsSidebarOpen((prevState) => !prevState);
+  };
+
+  const handleCategoryClick = (event) => {
+    if (event.target.tagName === "BUTTON") {
+      setCategoryToSearch(event.target.innerText);
     }
   };
 
@@ -55,7 +62,7 @@ function Products() {
 
   const fetchProducts = (searchItem) => {
     const url =
-      `${baseUrl}/products/?page=${currentPage}` +
+      `${baseUrl}/products/?page=${currentPage}&sort=${sortby}&category=${categoryToSearch}` +
       (searchItem ? `&item=${searchItem}` : "");
 
     axios
@@ -99,24 +106,31 @@ function Products() {
     }
   };
 
+  const handleFiltration = () => {
+    fetchProducts(searchText);
+  };
+
   useEffect(() => {
+    // Fetch products on page load or when pagination/search filters change
+    setIsLoading(true);
     let timeout = setTimeout(() => {
       fetchProducts(searchText);
     }, 1500);
 
     return () => clearTimeout(timeout);
-  }, [currentPage, searchText]);
+  }, [currentPage, searchText, categoryToSearch]);
 
   useEffect(() => {
+    // Update pagination buttons whenever products change
     handlePagination();
   }, [products]);
 
   return (
     <div className="p-3">
-      <div>
-        <h1>Products {isLoading ? "hello" : "bye"}</h1>
+      <div className="d-flex border align-items-center justify-content-between px-3">
+        <h1>Products</h1>
         <button className="btn btn-primary" onClick={handleSidebar}>
-          <box-icon name="exit" color="white"></box-icon>
+          <box-icon name="cog" type="solid"></box-icon>
         </button>
       </div>
       <div>
@@ -128,14 +142,31 @@ function Products() {
           className="form-control my-3"
         />
       </div>
+      <div
+        className="d-flex border justify-content-start gap-2 align-items-center p-2 overflow-x-scroll"
+        onClick={handleCategoryClick}
+      >
+        <strong>Select Category :</strong>
+        <button className="btn btn-primary">Top Selling</button>
+        <button className="btn btn-secondary">Mobile</button>
+        <button className="btn btn-secondary">Electronics</button>
+        <button className="btn btn-secondary">Grocery</button>
+        <button className="btn btn-secondary">Fashion</button>
+        <button className="btn btn-secondary">Books</button>
+        <button className="btn btn-secondary">Home Decor</button>
+        <button className="btn btn-secondary">Beauty</button>
+        <button className="btn btn-secondary">Automotive</button>
+        <button className="btn btn-secondary">Sports</button>
+      </div>
+
       <div>
         <div
-          className={`sidebar d-flex flex-column gap-2 my-3 bg-primary ${
+          className={`sidebar d-flex flex-column gap-2 my-3 px-5 bg-secondary ${
             isSidebarOpen ? "open" : ""
           }`}
         >
           <label for="customRange2" class="form-label">
-            Price range {priceRange}
+            Price range {priceRange} :
           </label>
           <input
             type="range"
@@ -145,11 +176,52 @@ function Products() {
             id="customRange2"
             onChange={handleRange}
           />
+          <label for="customRange2" class="form-label">
+            Sort By :
+          </label>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="default" selected>
+              Selete Options
+            </option>
+            <option value="l2h">Low to high</option>
+            <option value="h2l">High to low</option>
+            <option value="asc">A-Z</option>
+            <option value="desc">Z-A</option>
+          </select>
 
-          <button className="btn btn-light my-3">Apply</button>
+          <button
+            className="btn btn-light my-3"
+            onClick={() => {
+              handleFiltration();
+              handleSidebar();
+            }}
+          >
+            Apply
+          </button>
         </div>
         <div className="cards-container">
-          {products.length > 0 ? (
+          {isLoading ? (
+            <div className="d-flex loader-container align-items-center justify-content-center border-2">
+              <div class="loader">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+                <div class="bar4"></div>
+                <div class="bar5"></div>
+                <div class="bar6"></div>
+                <div class="bar7"></div>
+                <div class="bar8"></div>
+                <div class="bar9"></div>
+                <div class="bar10"></div>
+                <div class="bar11"></div>
+                <div class="bar12"></div>
+              </div>
+            </div>
+          ) : products.length > 0 ? (
             products.map((product) => (
               <div
                 key={product.id}
@@ -162,10 +234,14 @@ function Products() {
                     <strong>Price: </strong>
                     {product.price}$
                   </p>
+                  <p>
+                    <strong>Category: </strong>
+                    {product.category}
+                  </p>
                   <button
                     onClick={() => handleAddToCart(product)}
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary my-1"
                   >
                     Add to cart
                   </button>
@@ -176,11 +252,15 @@ function Products() {
               </div>
             ))
           ) : (
-            <p>Nothing to show</p>
+            <div className="d-flex loader-container align-items-center justify-content-center border-2">
+              <h1>Could find anything!</h1>
+            </div>
           )}
         </div>
+        <div className="my-3 gap-3 d-flex align-items-center justify-content-center">
+          {buttons}
+        </div>
       </div>
-      <div className="border my-3">{buttons}</div>
     </div>
   );
 }

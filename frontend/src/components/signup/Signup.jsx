@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useAuth } from "./AuthContext";
 const baseUrl = "http://localhost:4500/user/register";
 
 export default function Signup() {
-  const { setIsLoggedIn, setUserData } = useAuth();
-
-  const sendValueToParent = (loginState, userDetails) => {
-    setIsLoggedIn(loginState);
-    setUserData(userDetails);
-  };
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
