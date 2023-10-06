@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Products.css";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "boxicons";
 const baseUrl = "http://localhost:4500";
 
 function Products() {
-  // State variables
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,6 +17,10 @@ function Products() {
   const [categoryToSearch, setCategoryToSearch] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchValue = searchParams.get("search");
 
   // Event handlers
   const handleSearch = (event) => {
@@ -128,7 +132,7 @@ function Products() {
   return (
     <div className="p-3">
       <div className="d-flex border align-items-center justify-content-between px-3">
-        <h1>Products</h1>
+        <h1>Products {searchValue}</h1>
         <button className="btn btn-primary" onClick={handleSidebar}>
           <box-icon name="cog" type="solid"></box-icon>
         </button>
@@ -170,7 +174,7 @@ function Products() {
           </label>
           <input
             type="range"
-            class="form-range"
+            className="form-range"
             min="0"
             max="6000"
             id="customRange2"
@@ -180,13 +184,11 @@ function Products() {
             Sort By :
           </label>
           <select
-            class="form-select"
+            className="form-select"
             aria-label="Default select example"
             onChange={(e) => setSortBy(e.target.value)}
           >
-            <option value="default" selected>
-              Selete Options
-            </option>
+            <option defaultValue={null}>Selete Options</option>
             <option value="l2h">Low to high</option>
             <option value="h2l">High to low</option>
             <option value="asc">A-Z</option>
