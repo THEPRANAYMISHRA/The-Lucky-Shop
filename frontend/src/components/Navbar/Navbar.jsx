@@ -3,6 +3,9 @@ import { useAuth } from "../AuthContext";
 
 export default function Navbar(props) {
   const { isLoggedIn, userData } = useAuth();
+  const avatar = localStorage.getItem("avatar");
+  const dataUrl = `data:image/jpeg;base64,${avatar}`;
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -68,9 +71,78 @@ export default function Navbar(props) {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" aria-disabled="true" href="/">
-                {userData.name}
-              </a>
+              <div className="dropdown">
+                <a
+                  className="nav-link dropdown-toggle d-flex align-items-center gap-2"
+                  href="/"
+                  role="button"
+                  id="profileDropdown"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {isLoggedIn ? (
+                    <img
+                      src={dataUrl}
+                      alt="Profile Icon"
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : (
+                    <box-icon name="user-circle"></box-icon>
+                  )}
+                  {isLoggedIn ? userData.name : "Profile"}
+                </a>
+                <ul
+                  className="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <a
+                      href="/"
+                      className={`dropdown-item ${
+                        isLoggedIn ? "d-none" : "d-block"
+                      }`}
+                    >
+                      <Link
+                        to="/login"
+                        className={`text-decoration-none ${
+                          isLoggedIn ? "d-none" : "d-block"
+                        }`}
+                      >
+                        Login
+                      </Link>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className={`dropdown-item ${
+                        isLoggedIn ? "d-block" : "d-none"
+                      }`}
+                      href="/"
+                    >
+                      <Link to="/" className="text-decoration-none">
+                        View Profile
+                      </Link>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className={`dropdown-item ${
+                        isLoggedIn ? "d-block" : "d-none"
+                      }`}
+                      href="/"
+                    >
+                      <Link to="/" className="text-decoration-none">
+                        Logout
+                      </Link>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>

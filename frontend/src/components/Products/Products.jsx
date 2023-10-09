@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Products.css";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "boxicons";
 const baseUrl = "http://localhost:4500";
 
 function Products() {
-  // State variables
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,6 +17,10 @@ function Products() {
   const [categoryToSearch, setCategoryToSearch] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchCategoryValue = searchParams.get("search");
 
   // Event handlers
   const handleSearch = (event) => {
@@ -113,6 +117,9 @@ function Products() {
   useEffect(() => {
     // Fetch products on page load or when pagination/search filters change
     setIsLoading(true);
+    if (searchCategoryValue?.length > 0) {
+      setCategoryToSearch(searchCategoryValue);
+    }
     let timeout = setTimeout(() => {
       fetchProducts(searchText);
     }, 1500);
@@ -128,7 +135,7 @@ function Products() {
   return (
     <div className="p-3">
       <div className="d-flex border align-items-center justify-content-between px-3">
-        <h1>Products</h1>
+        <h1>Products : {searchCategoryValue}</h1>
         <button className="btn btn-primary" onClick={handleSidebar}>
           <box-icon name="cog" type="solid"></box-icon>
         </button>
@@ -165,28 +172,26 @@ function Products() {
             isSidebarOpen ? "open" : ""
           }`}
         >
-          <label for="customRange2" class="form-label">
+          <label for="customRange2" className="form-label">
             Price range {priceRange} :
           </label>
           <input
             type="range"
-            class="form-range"
+            className="form-range"
             min="0"
             max="6000"
             id="customRange2"
             onChange={handleRange}
           />
-          <label for="customRange2" class="form-label">
+          <label for="customRange2" className="form-label">
             Sort By :
           </label>
           <select
-            class="form-select"
+            className="form-select"
             aria-label="Default select example"
             onChange={(e) => setSortBy(e.target.value)}
           >
-            <option value="default" selected>
-              Selete Options
-            </option>
+            <option defaultValue={null}>Selete Options</option>
             <option value="l2h">Low to high</option>
             <option value="h2l">High to low</option>
             <option value="asc">A-Z</option>
@@ -206,19 +211,19 @@ function Products() {
         <div className="cards-container">
           {isLoading ? (
             <div className="d-flex loader-container align-items-center justify-content-center border-2">
-              <div class="loader">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-                <div class="bar4"></div>
-                <div class="bar5"></div>
-                <div class="bar6"></div>
-                <div class="bar7"></div>
-                <div class="bar8"></div>
-                <div class="bar9"></div>
-                <div class="bar10"></div>
-                <div class="bar11"></div>
-                <div class="bar12"></div>
+              <div className="loader">
+                <div className="bar1"></div>
+                <div className="bar2"></div>
+                <div className="bar3"></div>
+                <div className="bar4"></div>
+                <div className="bar5"></div>
+                <div className="bar6"></div>
+                <div className="bar7"></div>
+                <div className="bar8"></div>
+                <div className="bar9"></div>
+                <div className="bar10"></div>
+                <div className="bar11"></div>
+                <div className="bar12"></div>
               </div>
             </div>
           ) : products.length > 0 ? (
