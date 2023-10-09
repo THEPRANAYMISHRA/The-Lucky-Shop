@@ -37,7 +37,7 @@ export default function ShopByCategory() {
             alt=""
             className="w-25 p-2"
           />
-          Mobiles
+          Electronics
         </button>
         <button
           className="d-flex flex-column justify-content-center align-items-center p-1 rounded btn btn-light"

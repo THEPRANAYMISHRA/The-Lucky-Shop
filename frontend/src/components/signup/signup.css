@@ -1,0 +1,26 @@
+.previewSuperContainer {
+  border: 2px dashed rgb(169, 169, 169);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.previewContainer {
+  border: 2px solid rgb(0, 89, 222);
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.previewImage {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+}

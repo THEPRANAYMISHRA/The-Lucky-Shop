@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 const baseUrl = "http://localhost:4500/user/login";
 
 export default function Login() {
+  const navigate = useNavigate();
   const { setIsLoggedIn, setUserData } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,9 +17,10 @@ export default function Login() {
       .then((res) => {
         alert("Login successful!");
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("usersname", res.data.name);
+        localStorage.setItem("avatar", res.data.avatar);
         setIsLoggedIn(true);
-        setUserData({ name: res.data.name });
+        setUserData({ name: res.data.name, avatar: res.data.avatar });
+        navigate("/Home");
       })
       .catch((err) => {
         alert("Invalid Credentials");
@@ -27,7 +29,7 @@ export default function Login() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="container w-50 my-3 border p-5">
+      <form onSubmit={handleSubmit} className="container my-3 border p-5">
         <h1>Login Form</h1>
         <input
           type="text"
