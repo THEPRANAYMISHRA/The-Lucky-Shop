@@ -1,0 +1,51 @@
+.mainconatinerforcart {
+  display: flex;
+  gap: 2rem;
+}
+
+.itemContainer {
+  display: flex;
+  padding: 2rem;
+  gap: 2rem;
+  align-items: center;
+}
+
+.detailsContainer {
+  padding: 0.5rem;
+}
+
+.left {
+  max-height: 80vh;
+  min-height: min-content;
+}
+
+.titleforproducts {
+  white-space: nowrap;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.2rem;
+  font-weight: bolder;
+}
+
+.imageContainer {
+  max-width: 150px;
+}
+
+.priceDetailsContainer {
+  min-width: 25%;
+  max-height: 100%;
+}
+@media screen and (max-width: 400px) {
+  .itemContainer {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 1000px) {
+  html {
+    font-size: 0.7em;
+  }
+  .mainconatinerforcart {
+    flex-direction: column !important;
+  }
+}

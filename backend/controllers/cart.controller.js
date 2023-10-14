@@ -19,21 +19,6 @@ const addProduct = async (req, res) => {
     }
 }
 
-const deleteProduct = async (req, res) => {
-    const _id = req.query.id
-
-    if (!_id) {
-        return res.status(400).send({ "msg": "Provide the id of product" })
-    } else {
-        try {
-            await CartModel.findByIdAndDelete(_id)
-            return res.send({ "msg": "Product removed" })
-        } catch (error) {
-            return res.send({ "msg": "No such product found!" })
-        }
-    }
-}
-
 const getProducts = async (req, res) => {
     const email = req.body.email
     try {
@@ -60,5 +45,31 @@ const updateQuantity = async (req, res) => {
     }
 }
 
+const deleteProduct = async (req, res) => {
+    const _id = req.query.id
 
-module.exports = { addProduct, deleteProduct, getProducts, updateQuantity }
+    if (!_id) {
+        return res.status(400).send({ "msg": "Provide the id of product" })
+    } else {
+        try {
+            await CartModel.findByIdAndDelete(_id)
+            return res.send({ "msg": "Product removed" })
+        } catch (error) {
+            return res.send({ "msg": "No such product found!" })
+        }
+    }
+}
+
+const clearCart = async (req, res) => {
+    const email = req.body.email
+
+    try {
+        await CartModel.deleteMany({ email: email })
+        return res.send({ "msg": "cart cleared" })
+    } catch (error) {
+        return res.send({ "msg": "failed to clear cart!" })
+    }
+}
+
+
+module.exports = { addProduct, deleteProduct, getProducts, updateQuantity, clearCart }

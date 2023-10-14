@@ -1,7 +1,7 @@
 const express = require('express')
 const UserRouter = express.Router()
 const { middleware } = require('../middleware/user.middleware');
-const { register, login, verify, placeOrder, getOrder } = require('../controllers/user.controllers')
+const { register, login, verify, placeOrder, getOrder, saveAddress } = require('../controllers/user.controllers')
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -21,9 +21,11 @@ UserRouter.get('/verify', middleware, verify)
 
 UserRouter.post('/login', login)
 
-UserRouter.post('/placeorder', middleware, placeOrder)
+UserRouter.post('/orders/place', middleware, placeOrder)
 
-UserRouter.get('/getorders', middleware, getOrder)
+UserRouter.get('/orders', middleware, getOrder)
+
+UserRouter.post('/address/save', middleware, saveAddress)
 
 module.exports = { UserRouter }
 

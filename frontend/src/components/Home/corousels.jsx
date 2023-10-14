@@ -73,7 +73,7 @@ const Slider = () => {
               <div className="imageContainer">
                 <img src={imageUrl.url} alt="movie" />
               </div>
-              <p className="text-center p-2">Yo Yo Honey Singh</p>
+              <p className="text-center p-2">Get 20% off</p>
             </div>
           );
         })}

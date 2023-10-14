@@ -8,6 +8,7 @@ import Signup from "./components/signup/Signup";
 import { AuthProvider } from "./components/AuthContext";
 import { CartProvider } from "./components/CartContext";
 import ViewMore from "./components/Products/ViewMore";
+import Payments from "./components/payments/Payments";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/view/:id" element={<ViewMore />} />
+            <Route path="/payments" element={<Payments />} />
           </Routes>
         </CartProvider>
       </AuthProvider>

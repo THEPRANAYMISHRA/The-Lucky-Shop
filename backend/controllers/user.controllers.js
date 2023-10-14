@@ -54,7 +54,6 @@ const verify = (req, res) => {
 
 const placeOrder = async (req, res) => {
     const { email, orders } = req.body;
-
     try {
         let user = await UsersModel.findOne({ email });
 
@@ -94,5 +93,24 @@ const getOrder = async (req, res) => {
     }
 };
 
+const saveAddress = async (req, res) => {
+    const { email, address } = req.body;
 
-module.exports = { register, login, verify, placeOrder, getOrder }
+    try {
+        let user = await UsersModel.findOne({ email })
+
+        if (user) {
+            user.addresses.push(address);
+            await user.save();
+            return res.status(201).send("address is saved in profile");
+        } else {
+            return res.status(404).send("User not found");
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(400).send("couldn't save address!");
+    }
+};
+
+
+module.exports = { register, login, verify, placeOrder, getOrder, saveAddress }

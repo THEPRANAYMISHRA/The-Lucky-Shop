@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import "./viewMore.css";
 
@@ -8,7 +8,6 @@ export default function ViewMore(props) {
   const { id } = useParams();
   const baseUrl = "http://localhost:4500";
   const [product, setProduct] = useState([]);
-  const [productId, setProductId] = useState("");
 
   const fetchProducts = (id) => {
     axios
@@ -25,7 +24,7 @@ export default function ViewMore(props) {
 
   useEffect(() => {
     fetchProducts(id);
-  }, [productId]);
+  }, []);
 
   return (
     <div className="p-3 m-3 outer-container">
@@ -38,7 +37,12 @@ export default function ViewMore(props) {
             </p>
             <p className="h2 my-2">{item.title}</p>
             <p className="h5 my-2">Rating:{item.rating.rate}</p>
-            <button className="btn btn-primary">Buy Now</button>
+            <Link
+              className="btn btn-primary"
+              to={`/payments/?productId=${item._id}`}
+            >
+              Buy Now
+            </Link>
             <details className="my-2">
               <summary>Description</summary>
               <div>
