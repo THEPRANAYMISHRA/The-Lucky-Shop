@@ -21,7 +21,7 @@ export default function Login() {
         localStorage.setItem("avatar", res.data.avatar);
         setIsLoggedIn(true);
         setUserData({ name: res.data.name, avatar: res.data.avatar });
-        navigate("/Home");
+        return navigate("/Home");
       })
       .catch((err) => {
         alert("Invalid Credentials");
