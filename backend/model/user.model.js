@@ -11,11 +11,16 @@ const userSchema = mongoose.Schema({
     password: {
         type: String, required: [true, "Password field can't be empty"]
     },
+    addresses: [String],
     orders: [
         {
             product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
             quantity: { type: Number, default: 1 },
-            date: { type: Date, default: Date.now }
+            date: { type: Date, default: Date.now },
+            name: { type: String, },
+            address: { type: String, },
+            pincode: { type: Number, },
+            phone: { type: Number, },
         }
     ]
 })

@@ -85,8 +85,8 @@ export default function Navbar(props) {
                       src={dataUrl}
                       alt="Profile Icon"
                       style={{
-                        width: "40px",
-                        height: "40px",
+                        width: "25px",
+                        height: "25px",
                         borderRadius: "50%",
                         objectFit: "cover",
                       }}

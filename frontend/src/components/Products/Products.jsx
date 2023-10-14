@@ -134,8 +134,10 @@ function Products() {
 
   return (
     <div className="p-3">
-      <div className="d-flex border align-items-center justify-content-between px-3">
-        <h1>Products : {searchCategoryValue}</h1>
+      <div className="d-flex align-items-center justify-content-between px-3">
+        <h1>
+          Products <span className="h5">: {searchCategoryValue}</span>
+        </h1>
         <button className="btn btn-primary" onClick={handleSidebar}>
           <box-icon name="cog" type="solid"></box-icon>
         </button>
@@ -150,7 +152,7 @@ function Products() {
         />
       </div>
       <div
-        className="d-flex border justify-content-start gap-2 align-items-center p-2 overflow-x-scroll"
+        className="d-none border justify-content-start gap-2 align-items-center p-2 overflow-x-scroll"
         onClick={handleCategoryClick}
       >
         <strong>Select Category :</strong>
@@ -172,7 +174,7 @@ function Products() {
             isSidebarOpen ? "open" : ""
           }`}
         >
-          <label for="customRange2" className="form-label">
+          {/* <label for="customRange2" className="form-label">
             Price range {priceRange} :
           </label>
           <input
@@ -182,7 +184,7 @@ function Products() {
             max="6000"
             id="customRange2"
             onChange={handleRange}
-          />
+          /> */}
           <label for="customRange2" className="form-label">
             Sort By :
           </label>
