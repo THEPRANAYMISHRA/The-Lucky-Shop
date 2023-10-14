@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import "./viewMore.css";
+// const baseUrl = "http://localhost:4500";
+const baseUrl = "https://the-lucky-shop.onrender.com";
 
 export default function ViewMore(props) {
   const { id } = useParams();
-  const baseUrl = "http://localhost:4500";
   const [product, setProduct] = useState([]);
 
   const fetchProducts = (id) => {
