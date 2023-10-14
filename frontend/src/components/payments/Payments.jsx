@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./payments.css";
 import axios from "axios";
+// const baseUrl = "http://localhost:4500";
+const baseUrl = "https://the-lucky-shop.onrender.com";
 
 export default function Payments() {
-  const baseUrl = "http://localhost:4500";
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const productId = searchParams.get("productId");

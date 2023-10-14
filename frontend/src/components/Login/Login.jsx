@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
-const baseUrl = "http://localhost:4500/user/login";
+// const baseUrl = "http://localhost:4500";
+const baseUrl = "https://the-lucky-shop.onrender.com";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(baseUrl, { email: email, password: password })
+      .post(`${baseUrl}/user/login`, { email: email, password: password })
       .then((res) => {
         alert("Login successful!");
         localStorage.setItem("token", res.data.token);

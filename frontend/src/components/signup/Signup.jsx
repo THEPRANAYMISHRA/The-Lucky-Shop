@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
-const baseUrl = "http://localhost:4500/user/register";
+// const baseUrl = "http://localhost:4500";
+const baseUrl = "https://the-lucky-shop.onrender.com";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export default function Signup() {
     formData.append("password", password);
 
     try {
-      await axios.post(baseUrl, formData);
+      await axios.post(`${baseUrl}/user/register`, formData);
       alert("Register Successful");
       navigate("/login");
     } catch (error) {
