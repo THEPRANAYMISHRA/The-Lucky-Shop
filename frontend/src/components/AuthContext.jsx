@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-const baseUrl = "http://localhost:4500/user/verify";
+// const baseUrl = "http://localhost:4500";
+const baseUrl = "https://the-lucky-shop.onrender.com";
 
 const AuthContext = createContext();
 
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       };
 
       axios
-        .get(baseUrl, config)
+        .get(`${baseUrl}/user/verify`, config)
         .then((res) => {
           console.log(res.data);
           setIsLoggedIn(true);
