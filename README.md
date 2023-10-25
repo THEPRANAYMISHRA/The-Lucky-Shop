@@ -1,8 +1,9 @@
-# The Lucky Shop
-
-![The Lucky Shop Logo](https://cdn-icons-png.flaticon.com/128/7610/7610777.png)
+# <img src='https://cdn-icons-png.flaticon.com/128/7610/7610777.png' width='30px'/> The Lucky Shop
 
 The Lucky Shop is a robust e-commerce platform crafted with cutting-edge technologies like Node.js, MongoDB, React, and Express.js. With a focus on security and user experience, this platform ensures the protection of user data through features like JWT authentication, bcrypt password hashing, and multer for efficient file handling.
+
+## Deployed Link
+ - https://the-lucky-shop.vercel.app/
 
 ## Features
 
@@ -28,7 +29,7 @@ The Lucky Shop is a robust e-commerce platform crafted with cutting-edge technol
   - JWT Authentication
   - Bcrypt Password Hashing
 
-- **ScreenShot**:
-![the-lucky-shop-ss-mobile](https://github.com/THEPRANAYMISHRA/The-Lucky-Shop/assets/115460435/f98449aa-1430-45b9-886f-a5b5cb14e2d1 =100px)
-![the-lucky-shop-ss-mobile-2](https://github.com/THEPRANAYMISHRA/The-Lucky-Shop/assets/115460435/266cb152-b72a-4bd9-885e-254f874ea0d9 =100px)
-![the-lucky-shop-ss-mobile-3](https://github.com/THEPRANAYMISHRA/The-Lucky-Shop/assets/115460435/72222d29-a410-4791-8a69-391312d6d54c =100px)
+- **Screenshots**:
+<img src='https://github.com/THEPRANAYMISHRA/The-Lucky-Shop/assets/115460435/72222d29-a410-4791-8a69-391312d6d54c' width='150px'/>
+<img src='https://github.com/THEPRANAYMISHRA/The-Lucky-Shop/assets/115460435/266cb152-b72a-4bd9-885e-254f874ea0d9' width='150px'/>
+<img src='https://github.com/THEPRANAYMISHRA/The-Lucky-Shop/assets/115460435/f98449aa-1430-45b9-886f-a5b5cb14e2d1' width='150px'/>
