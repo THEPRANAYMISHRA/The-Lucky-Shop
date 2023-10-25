@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
-// const baseUrl = "http://localhost:4500";
-const baseUrl = "https://the-lucky-shop.onrender.com";
+const baseUrl = "http://localhost:4500";
+// const baseUrl = "https://the-lucky-shop.onrender.com";
 
 export default function Signup() {
   const navigate = useNavigate();

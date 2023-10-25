@@ -1,23 +1,35 @@
 var jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
-const bcrypt=require("bcrypt")
+const bcrypt = require("bcrypt")
+const saltRounds = 10;
 const { UsersModel } = require('../model/user.model');
 
 
 const register = async (req, res) => {
     const avatar = req.file;
+    // fs.readFile(avatar.path, (err, data) => {
+    //     if (err) throw err;
+    //     const base64String = data.toString('base64');
+    //     console.log(base64String);
+    // });
+
     const { name, email, password } = req.body;
 
     if (!email || !name || !password) {
         return res.status(400).send({ "msg": "Fill all the fields!" });
     } else {
-        let newUser = new UsersModel({ name, email, password });
-        newUser.avatar = `${avatar.filename}`;
-
         try {
-            await newUser.save();
-            return res.status(201).send({ "msg": "User created successfully!" });
+            bcrypt.hash(password, saltRounds, async (err, hash) => {
+                if (err) {
+                    return res.status(400).send({ "msg": "Failed to create user!" });
+                } else {
+                    let newUser = new UsersModel({ name, email, password: hash });
+                    newUser.avatar = `${avatar.filename}`;
+                    await newUser.save();
+                    return res.status(201).send({ "msg": "User created successfully!" });
+                }
+            });
         } catch (error) {
             return res.status(500).send({ "msg": "Error creating user" });
         }
@@ -35,15 +47,17 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(404).send({ "msg": "No such user found!" })
         } else {
-            if (password == user.password) {
-                var token = jwt.sign({ email: email, name: user.name }, 'shhhhh');
-                const avatarPath = path.join(__dirname, '../uploads', user.avatar);
-                const imageData = fs.readFileSync(avatarPath);
-                const base64Image = imageData.toString('base64');
-                return res.status(200).send({ token: token, msg: "login successful!", name: user.name, avatar: base64Image || null })
-            } else {
-                return res.status(400).send({ "msg": "wrong password" })
-            }
+            bcrypt.compare(password, user.password, function (err, result) {
+                if (err) {
+                    return res.status(400).send({ "msg": "wrong password" })
+                } else {
+                    var token = jwt.sign({ email: email, name: user.name }, 'shhhhh');
+                    const avatarPath = path.join(__dirname, '../uploads', user.avatar);
+                    const imageData = fs.readFileSync(avatarPath);
+                    const base64Image = imageData.toString('base64');
+                    return res.status(200).send({ token: token, msg: "login successful!", name: user.name, avatar: base64Image || null })
+                }
+            });
         }
     }
 }
