@@ -51,7 +51,7 @@ const login = async (req, res) => {
                 if (err) {
                     return res.status(400).send({ "msg": "wrong password" })
                 } else {
-                    var token = jwt.sign({ email: email, name: user.name }, 'shhhhh');
+                    var token = jwt.sign({ email: email, name: user.name }, process.env.jwtkey);
                     const avatarPath = path.join(__dirname, '../uploads', user.avatar);
                     const imageData = fs.readFileSync(avatarPath);
                     const base64Image = imageData.toString('base64');

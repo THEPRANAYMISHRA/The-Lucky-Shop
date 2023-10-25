@@ -9,7 +9,7 @@ const middleware = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, 'shhhhh');
+        const decoded = jwt.verify(token, process.env.jwtkey);
         if (decoded) {
             req.body.name = decoded.name
             req.body.email = decoded.email
