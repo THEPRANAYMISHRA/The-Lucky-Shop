@@ -1,7 +1,9 @@
 var jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const bcrypt=require("bcrypt")
 const { UsersModel } = require('../model/user.model');
+
 
 const register = async (req, res) => {
     const avatar = req.file;
