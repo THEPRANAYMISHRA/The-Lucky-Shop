@@ -4,6 +4,7 @@ const path = require('path');
 const bcrypt = require("bcrypt")
 const saltRounds = 10;
 const { UsersModel } = require('../model/user.model');
+const { blacklistModel } = require('../model/blacklist.model');
 
 
 const register = async (req, res) => {
@@ -61,6 +62,23 @@ const login = async (req, res) => {
         }
     }
 }
+
+const logout = async (req, res) => {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(400).send({ "msg": "Invalid option!" });
+    } else {
+        try {
+            const newBlacklistEntry = new blacklistModel({ token });
+            await newBlacklistEntry.save();
+            return res.status(200).send({ "msg": "Logged out successfully!" });
+        } catch (error) {
+            return res.status(500).send({ "msg": "Logged out failed!" });
+        }
+    }
+}
+
 
 const verify = (req, res) => {
     const name = req.body.name
@@ -129,4 +147,4 @@ const saveAddress = async (req, res) => {
 };
 
 
-module.exports = { register, login, verify, placeOrder, getOrder, saveAddress }
+module.exports = { register, login, logout, verify, placeOrder, getOrder, saveAddress }

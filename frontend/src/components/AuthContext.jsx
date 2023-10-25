@@ -21,14 +21,13 @@ export const AuthProvider = ({ children }) => {
       axios
         .get(`${baseUrl}/user/verify`, config)
         .then((res) => {
-          console.log(res.data);
           setIsLoggedIn(true);
           setUserData({ name: res.data.name });
         })
         .catch((err) => {
-          console.log(err);
+          localStorage.removeItem("token");
           setIsLoggedIn(false);
-          alert("Session expired or unauthorized access");
+          alert("Token expired or unauthorized access");
         });
     } else {
       setIsLoggedIn(false);

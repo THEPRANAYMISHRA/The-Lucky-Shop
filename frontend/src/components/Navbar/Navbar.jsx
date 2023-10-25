@@ -1,10 +1,34 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import axios from "axios";
 
 export default function Navbar(props) {
   const { isLoggedIn, userData } = useAuth();
   const avatar = localStorage.getItem("avatar");
   const dataUrl = `data:image/jpeg;base64,${avatar}`;
+
+  // const baseUrl = "http://localhost:4500";
+  const baseUrl = "https://the-lucky-shop.onrender.com";
+
+  const handleLogout = () => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        authorization: token,
+      },
+    };
+    axios
+      .post(`${baseUrl}/user/logout`, config)
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.removeItem("token");
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        alert(err.msg);
+      });
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -130,16 +154,14 @@ export default function Navbar(props) {
                     </a>
                   </li>
                   <li>
-                    <a
+                    <button
                       className={`dropdown-item ${
                         isLoggedIn ? "d-block" : "d-none"
                       }`}
-                      href="/"
+                      onClick={handleLogout}
                     >
-                      <Link to="/" className="text-decoration-none">
-                        Logout
-                      </Link>
-                    </a>
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>
