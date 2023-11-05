@@ -16,13 +16,15 @@ export default function Login() {
     axios
       .post(`${baseUrl}/user/login`, { email: email, password: password })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           alert("Login successful!");
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("avatar", res.data.avatar);
           setIsLoggedIn(true);
           setUserData({ name: res.data.name, avatar: res.data.avatar });
           return navigate("/Home");
+        } else {
+          alert("Unexpected response from server");
         }
       })
       .catch((err) => {
