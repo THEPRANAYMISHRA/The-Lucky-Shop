@@ -10,6 +10,7 @@ const middleware = async (req, res, next) => {
     } else {
         try {
             let isThisTokenIsBlackListed = await blacklistModel.findOne({ token })
+            console.log(isThisTokenIsBlackListed);
             if (isThisTokenIsBlackListed) {
                 return res.status(401).json({ error: "Token already expired" });
             } else {
@@ -26,8 +27,6 @@ const middleware = async (req, res, next) => {
             return res.status(400).json({ msg: error });
         }
     }
-
-
 };
 
 module.exports = { middleware };

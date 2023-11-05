@@ -12,23 +12,26 @@ export default function Navbar(props) {
 
   const handleLogout = () => {
     const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        authorization: token,
-      },
-    };
-    axios
-      .post(`${baseUrl}/user/logout`, config)
-      .then((res) => {
-        if (res.status === 200) {
-          localStorage.removeItem("token");
-          window.location.reload();
-          alert("Log out successful");
-        }
-      })
-      .catch((err) => {
-        alert(err.msg);
-      });
+    if (token) {
+      const config = {
+        headers: {
+          authorization: token,
+        },
+      };
+
+      axios
+        .get(`${baseUrl}/user/logout`, config)
+        .then((res) => {
+          if (res.status === 200) {
+            localStorage.removeItem("token");
+            window.location.reload();
+            alert("Logout successful");
+          }
+        })
+        .catch((err) => {
+          alert("Something went wrong");
+        });
+    }
   };
 
   return (
