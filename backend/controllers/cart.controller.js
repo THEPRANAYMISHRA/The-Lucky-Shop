@@ -3,7 +3,7 @@ const CartModel = require('../model/cart.model')
 const addProduct = async (req, res) => {
     const { title, email, price, category, image, quantity } = req.body
 
-    let isProductAlreadyInCart = await CartModel.findOne({ title: title })
+    let isProductAlreadyInCart = await CartModel.findOne({ title, email })
 
     if (isProductAlreadyInCart) {
         return res.status(409).send({ 'msg': 'product already in cart' });
