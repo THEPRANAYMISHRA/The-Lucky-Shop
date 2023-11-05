@@ -16,6 +16,7 @@ export default function Login() {
     axios
       .post(`${baseUrl}/user/login`, { email: email, password: password })
       .then((res) => {
+        console.log(res);
         if (res.status === 200) {
           alert("Login successful!");
           localStorage.setItem("token", res.data.token);
