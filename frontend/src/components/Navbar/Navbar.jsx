@@ -23,6 +23,7 @@ export default function Navbar(props) {
         if (res.status === 200) {
           localStorage.removeItem("token");
           window.location.reload();
+          alert("Log out successful");
         }
       })
       .catch((err) => {
