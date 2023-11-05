@@ -7,16 +7,11 @@ const { CartRouter } = require('./routes/cart.routes')
 const { middleware } = require('./middleware/user.middleware')
 const app = express()
 app.use(express.json())
-var whitelist = ['https://the-lucky-shop.vercel.app', 'http://localhost:3000']
-var corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}
+const corsOptions = {
+    origin: 'https://the-lucky-shop.vercel.app',
+};
+
+
 app.use(cors(corsOptions))
 app.use('/user', UserRouter)
 app.use('/products', ProductRouter)
