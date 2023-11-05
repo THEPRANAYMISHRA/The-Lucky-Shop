@@ -8,18 +8,22 @@ const middleware = async (req, res, next) => {
     if (!token) {
         return res.status(401).json({ error: "Please provide a token" });
     } else {
-        let isThisTokenIsBlackListed = await blacklistModel.findOne({ token })
-        if (isThisTokenIsBlackListed) {
-            return res.status(401).json({ error: "Token already expired" });
-        } else {
-            const decoded = jwt.verify(token, process.env.jwtkey);
-            if (decoded) {
-                req.body.name = decoded.name
-                req.body.email = decoded.email
-                next();
+        try {
+            let isThisTokenIsBlackListed = await blacklistModel.findOne({ token })
+            if (isThisTokenIsBlackListed) {
+                return res.status(401).json({ error: "Token already expired" });
             } else {
-                return res.status(400).json({ msg: "Unauthorized user!" });
+                const decoded = jwt.verify(token, process.env.jwtkey);
+                if (decoded) {
+                    req.body.name = decoded.name
+                    req.body.email = decoded.email
+                    next();
+                } else {
+                    return res.status(400).json({ msg: "Unauthorized user!" });
+                }
             }
+        } catch (error) {
+            return res.status(400).json({ msg: error });
         }
     }
 
