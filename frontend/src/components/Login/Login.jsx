@@ -17,18 +17,15 @@ export default function Login() {
       .post(`${baseUrl}/user/login`, { email: email, password: password })
       .then((res) => {
         console.log(res);
-        if (res.status === 200) {
-          alert("Login successful!");
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("avatar", res.data.avatar);
-          setIsLoggedIn(true);
-          setUserData({ name: res.data.name, avatar: res.data.avatar });
-          return navigate("/Home");
-        } else {
-          alert("Unexpected response from server");
-        }
+        alert("Login successful!");
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("avatar", res.data.avatar);
+        setIsLoggedIn(true);
+        setUserData({ name: res.data.name, avatar: res.data.avatar });
+        return navigate("/Home");
       })
       .catch((err) => {
+        console.log(err);
         alert("Invalid Credentials");
       });
   };
