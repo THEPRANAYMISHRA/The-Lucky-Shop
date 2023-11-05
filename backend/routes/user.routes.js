@@ -21,7 +21,7 @@ UserRouter.get('/verify', middleware, verify)
 
 UserRouter.post('/login', login)
 
-UserRouter.post('/logout', middleware, logout)
+UserRouter.get('/logout', middleware, logout)
 
 UserRouter.post('/orders/place', middleware, placeOrder)
 
