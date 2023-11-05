@@ -18,7 +18,6 @@ var corsOptions = {
     }
 }
 app.use(cors(corsOptions))
-
 app.use('/user', UserRouter)
 app.use('/products', ProductRouter)
 app.use('/cart', middleware, CartRouter)
